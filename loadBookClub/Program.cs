@@ -26,7 +26,8 @@ namespace loadBookClub
                 var authorNames = from a in booksXML.Descendants("author") select a;
                 List<String> insertedNames = new List<string>();
                 var aNames = from a in authorNames select a;
-                
+                List<author> authorsList = new List<author>();
+
                 foreach (var i in aNames)
                 {
                     if (i.Attribute("firstName") != null)
@@ -34,13 +35,15 @@ namespace loadBookClub
                         author a = new author
                         {
                             FIRSTNAME = i.Attribute("firstName").Value,
-                            LASTNAME = i.Attribute("lastName").Value
+                            LASTNAME = i.Attribute("lastName").Value,
+                            books = new List<book>()
                         };
                         String authorname = a.FIRSTNAME.ToString() + a.LASTNAME.ToString();
                         if (!(insertedNames.Contains(authorname)))
                         {
                             db.authors.Add(a);
                             insertedNames.Add(authorname);
+                            authorsList.Add(a);
                         }
                     }
                     if (i.Attribute("firstName") == null)
@@ -48,13 +51,15 @@ namespace loadBookClub
                         author a = new author
                         {
                             FIRSTNAME = "not available",
-                            LASTNAME = i.Attribute("lastName").Value
+                            LASTNAME = i.Attribute("lastName").Value,
+                            books = new List<book>()
                         };
                         String authorname = a.FIRSTNAME.ToString() + a.LASTNAME.ToString();
                         if (!(insertedNames.Contains(authorname)))
                         {
                             db.authors.Add(a);
                             insertedNames.Add(authorname);
+                            authorsList.Add(a);
                         }
                     }          
                 }//done creating authors
@@ -81,35 +86,18 @@ namespace loadBookClub
                     allBooks.Add(book);
                     db.books.Add(book);
 
-
-
-
-
-                    author auth = db.authors.Where(a => a.FIRSTNAME == anonBook.authorFName && a.LASTNAME == anonBook.authorLName).First();
+                    var auth = db.authors.Where(a => a.FIRSTNAME == anonBook.authorFName && a.LASTNAME == anonBook.authorLName).FirstOrDefault();
+                    if(auth != null)
                     auth.books.Add(book);
-                   /* var authors = from a in db.authors select a;
-                     var anAuthor = (from a in authors
-                                       where a.FIRSTNAME == anonBook.authorFName && a.LASTNAME == anonBook.authorLName
-                                       select a);
-                   // anAuthor.books.Add(book);*/
                 }
-
-                Console.WriteLine(anonymousBooks);
-
-                //db.SaveChanges();
+              
+                foreach (author author in db.authors)
+                {
+                    Console.WriteLine(author.FIRSTNAME + " " + author.LASTNAME + " wrote" + author.books.First());
+                }
+                db.SaveChanges();
             }
-            /*
-            foreach(var i in authorNames)
-            {
-                if (i.Attribute("firstName") != null)
-                    Console.Write(i.Attribute("firstName").Value + " ");
-                else
-                    Console.Write("N/A");
-                Console.WriteLine(i.Attribute("lastName").Value);
-                
-            }
-            */
-            //Console.Write(authorFNames);
+            
             Console.WriteLine("Execution completed");
             Console.Read();
         }
