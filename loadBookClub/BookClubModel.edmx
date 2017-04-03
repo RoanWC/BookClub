@@ -4,13 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BookStoreDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BookStoreDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="author">
           <Key>
             <PropertyRef Name="AUTHOR_ID" />
           </Key>
           <Property Name="AUTHOR_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FIRSTNAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FIRSTNAME" Type="varchar" MaxLength="50" />
           <Property Name="LASTNAME" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -133,8 +133,7 @@ warning 6002: The table/view '1542745.dbo.authorbook' does not have a primary ke
             <End Role="review" EntitySet="review" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BookStoreDB" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -143,7 +142,7 @@ warning 6002: The table/view '1542745.dbo.authorbook' does not have a primary ke
             <PropertyRef Name="AUTHOR_ID" />
           </Key>
           <Property Name="AUTHOR_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FIRSTNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FIRSTNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="LASTNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="books" Relationship="Self.authorbook" FromRole="author" ToRole="book" />
         </EntityType>
