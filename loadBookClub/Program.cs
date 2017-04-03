@@ -89,14 +89,26 @@ namespace loadBookClub
                 Console.WriteLine(auth?.FIRSTNAME + " " + auth.LASTNAME + " wrote " + auth.books?.First().TITLE);
             }//end foreach 
 
+            XElement ratingsXML = XElement.Load("ratings.xml");
+            List<user> userList = new List<user>();
+            var xmlusers = from u in ratingsXML.Descendants("user") select u;
+            foreach(var u in xmlusers)
+            {
+                user newUser = new user
+                {
+                    USERNAME = u.Attribute("userId").Value,
+                    PASSWORD = u.Attribute("userId").Value,
+                    FIRSTNAME = u.Attribute("userId").Value
+                };
+                var reviews = u.Elements("review");
+                Console.Write("alert");            
+            }
+
             //put the books and authors into the db set and save changes to the database
             using (var db = new BookClubDB())
             {
-                foreach (book b in allBooks)
-                {
-                    db.books.Add(b);
-                }
-                              
+
+                 //i do not need to add the books to the dbset because they are all in author objects.                             
                 foreach (author a in authorsList)
                 {
                     db.authors.Add(a);
