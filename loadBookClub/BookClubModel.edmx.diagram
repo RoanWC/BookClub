@@ -5,10 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="9fb1ead2f501420cafba53d9f7874aae" Name="Diagram1">
-        <EntityTypeShape EntityType="BookStoreDB.author" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreDB.author" Width="1.25" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BookStoreDB.book" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="BookStoreDB.review" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookStoreDB.user" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreDB.user" Width="1.5" PointX="1.5" PointY="4.625" IsExpanded="true" />
         <AssociationConnector Association="BookStoreDB.FK_review_ToBook" ManuallyRouted="false" />
         <AssociationConnector Association="BookStoreDB.FK_review_ToUser" ManuallyRouted="false" />
         <AssociationConnector Association="BookStoreDB.authorbook" ManuallyRouted="false" />

@@ -18,90 +18,90 @@ namespace loadBookClub
 
 
 
-            using (var db = new BookClubDB())
+            //create author objects and put them in a list of authors.
+            var authorNames = from a in booksXML.Descendants("author") select a;
+            List<String> insertedNames = new List<string>();
+            var aNames = from a in authorNames select a;
+            List<author> authorsList = new List<author>();
+
+            foreach (var i in aNames)
+            {
+                if (i.Attribute("firstName") != null)
+                {
+                    author a = new author
+                    {
+                        FIRSTNAME = i.Attribute("firstName").Value,
+                        LASTNAME = i.Attribute("lastName").Value,
+                        books = new List<book>()
+                    };
+                    String authorname = a.FIRSTNAME.ToString() + a.LASTNAME.ToString();
+                    if (!(insertedNames.Contains(authorname)))
+                    {
+                        insertedNames.Add(authorname);
+                        authorsList.Add(a);
+                    }
+                }
+                if (i.Attribute("firstName") == null)
+                {
+                    author a = new author
+                    {
+                        FIRSTNAME = i.Attribute("firstName")?.Value,
+                        LASTNAME = i.Attribute("lastName").Value,
+                        books = new List<book>()
+                    };
+                    String authorname = "" + a.LASTNAME.ToString();
+                    if (!(insertedNames.Contains(authorname)))
+                    {
+                        insertedNames.Add(authorname);
+                        authorsList.Add(a);
+                    }
+                }
+            }//done creating authors
+
+
+            //create anonymous objects for the books and use them to create books and add them to the correct author before putting the books in a list
+            var XMLbooks = from b in booksXML.Descendants("book") select b;
+            List<Object> anonymousBooks = new List<Object>();
+            List<book> allBooks = new List<book>();
+            foreach (var b in XMLbooks)
             {
 
-
-                //create all of the author objects
-                var authorNames = from a in booksXML.Descendants("author") select a;
-                List<String> insertedNames = new List<string>();
-                var aNames = from a in authorNames select a;
-                List<author> authorsList = new List<author>();
-
-                foreach (var i in aNames)
+                var anonBook = new
                 {
-                    if (i.Attribute("firstName") != null)
-                    {
-                        author a = new author
-                        {
-                            FIRSTNAME = i.Attribute("firstName").Value,
-                            LASTNAME = i.Attribute("lastName").Value,
-                            books = new List<book>()
-                        };
-                        String authorname = a.FIRSTNAME.ToString() + a.LASTNAME.ToString();
-                        if (!(insertedNames.Contains(authorname)))
-                        {
-                            db.authors.Add(a);
-                            insertedNames.Add(authorname);
-                            authorsList.Add(a);
-                        }
-                    }
-                    if (i.Attribute("firstName") == null)
-                    {
-                        author a = new author
-                        {
-                            FIRSTNAME = "not available",
-                            LASTNAME = i.Attribute("lastName").Value,
-                            books = new List<book>()
-                        };
-                        String authorname = a.FIRSTNAME.ToString() + a.LASTNAME.ToString();
-                        if (!(insertedNames.Contains(authorname)))
-                        {
-                            db.authors.Add(a);
-                            insertedNames.Add(authorname);
-                            authorsList.Add(a);
-                        }
-                    }
-                }//done creating authors
-
-                //create anonymous objects for the books
-                var XMLbooks = from b in booksXML.Descendants("book") select b;
-                List<Object> anonymousBooks = new List<Object>();
-                List<book> allBooks = new List<book>();
-                foreach (var b in XMLbooks)
+                    TITLE = b.Element("title").Value,
+                    DESCRIPTION = b.Element("description").Value,
+                    authorFName = b.Element("author").Attribute("firstName")?.Value,
+                    authorLName = b.Element("author").Attribute("lastName").Value
+                };
+                anonymousBooks.Add(anonBook);
+                book book = new book
                 {
-                    
-                    var anonBook = new
-                    {
-                        TITLE = b.Element("title").Value,
-                        DESCRIPTION = b.Element("description").Value,
-                        authorFName = b.Element("author").Attribute("firstName")?.Value,
-                        authorLName = b.Element("author").Attribute("lastName").Value
-                    };
-                    anonymousBooks.Add(anonBook);
-                    book book = new book
-                    {
-                        TITLE = anonBook.TITLE,
-                        DESCRIPTION = anonBook.DESCRIPTION
-                    };
-                    allBooks.Add(book);
-                    db.books.Add(book);
+                    TITLE = anonBook.TITLE,
+                    DESCRIPTION = anonBook.DESCRIPTION
+                };
+                allBooks.Add(book);
 
-                    var auth = db.authors.Where(a => a.FIRSTNAME == anonBook.authorFName && a.LASTNAME == anonBook.authorLName).FirstOrDefault();
+                var auth = authorsList.Where(a => a.FIRSTNAME == anonBook.authorFName && a.LASTNAME == anonBook.authorLName).FirstOrDefault();
 
-                    if (auth != null)
-                    {
-                        Console.WriteLine("alert");
-                        auth.books.Add(book);
+                Console.WriteLine("alert");
+                auth?.books.Add(book);
 
-                        Console.WriteLine(auth.FIRSTNAME + " " + auth.LASTNAME + " wrote" + auth.books.First());
-                    }//end if
-                }//end foreach 
+                Console.WriteLine(auth?.FIRSTNAME + " " + auth.LASTNAME + " wrote " + auth.books?.First().TITLE);
+            }//end foreach 
 
-
-
-
-                //             db.SaveChanges();
+            //put the books and authors into the db set and save changes to the database
+            using (var db = new BookClubDB())
+            {
+                foreach (book b in allBooks)
+                {
+                    db.books.Add(b);
+                }
+                              
+                foreach (author a in authorsList)
+                {
+                    db.authors.Add(a);
+                }
+                db.SaveChanges();
             }
 
             Console.WriteLine("Execution completed");
