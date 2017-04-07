@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using loadBookClub;
+using System.IO;
+using System.Reflection;
 
 namespace loadBookClub
 {
@@ -11,7 +14,8 @@ namespace loadBookClub
     {
         static void Main(string[] args)
         {
-            XElement booksXML = XElement.Load("books.xml");
+
+            XElement booksXML = XElement.Load(@"Files/books.xml");
             // var authorFNames = from fname in authornames.Descendants("author") select fname.Attribute("firstName");
             // var authorLNames = from lname in authornames.Descendants("author") select lname;//.Attribute("lastName");
 
@@ -89,7 +93,7 @@ namespace loadBookClub
                 Console.WriteLine(auth?.FIRSTNAME + " " + auth.LASTNAME + " wrote " + auth.books?.First().TITLE);
             }//end foreach 
 
-            XElement ratingsXML = XElement.Load("ratings.xml");
+            XElement ratingsXML = XElement.Load(@"Files/ratings.xml");
             List<user> userList = new List<user>();
             var xmlusers = from u in ratingsXML.Descendants("user") select u;
             foreach(var u in xmlusers)
@@ -98,11 +102,27 @@ namespace loadBookClub
                 {
                     USERNAME = u.Attribute("userId").Value,
                     PASSWORD = u.Attribute("userId").Value,
-                    FIRSTNAME = u.Attribute("userId").Value
+                    FIRSTNAME = u.Attribute("userId").Value,
+                    LASTNAME = u.Attribute("lastName")?.Value ?? "Reader",
+                    COUNTRY = "CAN"
                 };
+                userList.Add(newUser);
                 var reviews = u.Elements("review");
+                foreach(var r in reviews)
+                {
+                    review newReview = new review
+                    {
+                        BOOK_ID = int.Parse(r.Attribute("bookId").Value),
+                        book = allBooks[int.Parse(r.Attribute("bookId").Value)],
+                        user = newUser,
+                        RATING = int.Parse(r.Attribute("rating").Value),
+                        CONTENT = ""
+                    };
+                    newUser.reviews.Add(newReview);
+                }
                 Console.Write("alert");            
             }
+            Console.WriteLine("alert");
 
             //put the books and authors into the db set and save changes to the database
             using (var db = new BookClubDB())

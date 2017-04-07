@@ -103,8 +103,12 @@
       <DependentUpon>BookClubModel.edmx</DependentUpon>
       <LastGenOutput>BookClubModel.cs</LastGenOutput>
     </Content>
-    <Content Include="books.xml" />
-    <Content Include="ratings.xml" />
+    <Content Include="Files\books.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\ratings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
