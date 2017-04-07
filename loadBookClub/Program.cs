@@ -87,14 +87,15 @@ namespace loadBookClub
 
                 var auth = authorsList.Where(a => a.FIRSTNAME == anonBook.authorFName && a.LASTNAME == anonBook.authorLName).FirstOrDefault();
 
-                Console.WriteLine("alert");
+                //Console.WriteLine("alert");
                 auth?.books.Add(book);
 
-                Console.WriteLine(auth?.FIRSTNAME + " " + auth.LASTNAME + " wrote " + auth.books?.First().TITLE);
+                //Console.WriteLine(auth?.FIRSTNAME + " " + auth.LASTNAME + " wrote " + auth.books?.First().TITLE);
             }//end foreach 
 
             XElement ratingsXML = XElement.Load(@"Files/ratings.xml");
             List<user> userList = new List<user>();
+            List<review> reviewList = new List<review>();
             var xmlusers = from u in ratingsXML.Descendants("user") select u;
             foreach(var u in xmlusers)
             {
@@ -107,7 +108,7 @@ namespace loadBookClub
                     COUNTRY = "CAN"
                 };
                 userList.Add(newUser);
-                var reviews = u.Elements("review");
+                var reviews = u.Descendants("review");
                 foreach(var r in reviews)
                 {
                     review newReview = new review
@@ -116,14 +117,16 @@ namespace loadBookClub
                         book = allBooks[int.Parse(r.Attribute("bookId").Value)],
                         user = newUser,
                         RATING = int.Parse(r.Attribute("rating").Value),
-                        CONTENT = ""
+                        CONTENT = "",
+                        USERNAME = newUser.USERNAME
+                        
                     };
                     newUser.reviews.Add(newReview);
-                }
-                Console.Write("alert");            
+                    reviewList.Add(newReview);
+                }     
             }
             Console.WriteLine("alert");
-
+            
             //put the books and authors into the db set and save changes to the database
             using (var db = new BookClubDB())
             {
@@ -133,9 +136,20 @@ namespace loadBookClub
                 {
                     db.authors.Add(a);
                 }
-                db.SaveChanges();
-            }
+                
+                foreach(user u in userList)
+                {
+                    db.users.Add(u);
+                }
 
+                foreach(review r in reviewList)
+                {
+                    db.reviews.Add(r);
+                }
+                //Console.Write("alert");
+               db.SaveChanges();
+            }
+            
             Console.WriteLine("Execution completed");
             Console.Read();
         }
