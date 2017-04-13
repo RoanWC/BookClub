@@ -31,7 +31,7 @@ namespace BookClubPage.Controllers
             if (ModelState.IsValid)
             {
                 
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
             }
 
             return View(user);
