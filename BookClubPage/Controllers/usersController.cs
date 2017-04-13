@@ -20,6 +20,24 @@ namespace BookClubPage.Controllers
             return View(db.users.ToList());
         }
 
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login([Bind(Include = "USERNAME,PASSWORD")] user user)
+        {
+            if (ModelState.IsValid)
+            {
+                
+                return RedirectToAction("Index");
+            }
+
+            return View(user);
+        }
+
+
         // GET: users/Details/5
         public ActionResult Details(string id)
         {
@@ -103,7 +121,7 @@ namespace BookClubPage.Controllers
             }
             return View(user);
         }
-
+         
         // POST: users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
