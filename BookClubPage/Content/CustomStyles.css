@@ -1,0 +1,65 @@
+﻿body {
+    background-color: #ccffcc;
+}
+.homeTitle {
+    color: black;
+    font-family: 'Lobster', cursive;
+    font-size:80px;
+    margin-top:50px;
+}
+.homeButton {
+    padding: 50px 80px;
+    font-size: 30px;
+    line-height: 1.33;
+    border-radius: 6px;
+    font-family:'Lobster', cursive;
+}
+.homeList {
+    margin-top:10%;
+}
+
+.homeButton:hover {
+    background-color: #80ff80;
+}
+
+.carousel-background {
+    background-color: #00e600;
+}
+
+.book-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-family:'Raleway',sans-serif;
+    font-size:20px;
+}
+
+.book-list-container{
+
+    padding: 15px;
+    border: solid;
+    border-radius: 25px;
+    width: 50%;
+}
+.book-list-buttons {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 1%;
+
+}
+.book-list-buttons:hover {
+    background-color: #00e600;
+}
+
+.book-detail-container {
+    padding: 15px;
+    border: solid;
+    border-radius: 25px;
+    width: 50%;
+    background-color: #00e600;
+}
+
+.label-td{
+    width:25%;
+    padding-top:0;
+}

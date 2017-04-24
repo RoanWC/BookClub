@@ -15,9 +15,54 @@ namespace BookClubPage.Controllers
         private Entities db = new Entities();
 
         // GET: books
-        public ActionResult Index()
+        public ActionResult Index(String sorting, int? pageNum)
         {
-            return View(db.books.ToList());
+            int page = pageNum ?? 0;
+
+
+            List<book> sortedBooks = new List<book>();
+            switch (sorting)
+            {
+                case "title":
+                    sortedBooks = db.books.OrderBy(e => e.TITLE).Select(e => e).ToList();
+                    break;
+                case "rating":
+                    sortedBooks = db.books.OrderBy(e => e.reviews.Select(r => r.RATING).Average()).Select(e => e).ToList();
+                    break;
+                case "author":
+                    sortedBooks = db.books.OrderBy(e => e.authors.Select(a => a.LASTNAME).FirstOrDefault()).Select(a => a).ToList();
+                    break;
+                case "views":
+                    sortedBooks = db.books.OrderBy(b => b.VIEWS).Select(b => b).ToList();
+                    break;
+                default:
+                    sortedBooks = db.books.Select(e => e).ToList();
+                    break;
+            }
+
+
+
+            List<List<book>> listBookLists = new List<List<book>>(10);
+
+            for (int i = 0; i < sortedBooks.Count; i++)
+            {
+                listBookLists.Add(new List<book>(sortedBooks.Take(10)));
+                sortedBooks.RemoveRange(0, 10);
+
+            }
+            listBookLists.Add(new List<book>(sortedBooks));
+            if(page < 0)
+            {
+                page = listBookLists.Count - 1;
+            }
+            if(page > listBookLists.Count - 1)
+            {
+                page = 0;
+            }
+
+            ViewBag.PageNumber = page;
+            ViewBag.Sorting = sorting;
+            return View(listBookLists[page]);
         }
 
         // GET: books/Details/5
@@ -44,7 +89,7 @@ namespace BookClubPage.Controllers
         }
 
         // POST: books/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
@@ -77,7 +122,7 @@ namespace BookClubPage.Controllers
         }
 
         // POST: books/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
@@ -120,7 +165,7 @@ namespace BookClubPage.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -6,7 +6,71 @@
 
 <h2>@Model.TITLE</h2>
 
-<div>
+<div class="contianer book-detail-container">
+    <table>
+        <tr>
+            <td class="label-td">
+                <label class="detail-label">Auhtor:</label>
+            </td>
+            <td>
+                <span>@Model.authors.First().FIRSTNAME @Model.authors.First().LASTNAME</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="label-td">
+                <label class="detail-label">Description:</label>
+            </td>
+            <td>
+                <span>@Model.DESCRIPTION</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="label-td">
+                <label class="detail-label">Average Rating:</label>
+            </td>
+            <td>
+                @ViewBag.Average
+            </td>
+        </tr>
+        <tr>
+            <td class="label-td">
+                <label class="detail-label">Reviews:</label>
+            </td>
+            <td>
+                <ul>
+                    @foreach (var r in Model.reviews)
+                    {
+                        <li>@r.USERNAME Rated this book @r.RATING</li>
+                    }
+                </ul>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!--
+    <ul class="book-list">
+
+        <li>
+            <label class="detail-label">Auhtor:</label>
+            <span>@Model.authors.First().FIRSTNAME @Model.authors.First().LASTNAME</span>
+        </li>
+        <li>
+            <table>
+                <tr>
+                    <td>
+                        <label class="detail-label">Description:</label>
+                        </td>
+                    <td>
+                        <span>@Model.DESCRIPTION</span>
+                    </td>
+            </table>
+        </li>
+    </ul>
+</div>
+-->
+<!--
+    <div>
 
     <hr />
     <dl class="dl-horizontal">
@@ -42,3 +106,4 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.BOOK_ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+    -->

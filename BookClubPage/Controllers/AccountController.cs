@@ -45,8 +45,29 @@ namespace BookClubPage.Controllers
                 ViewBag.ReturnURL = ReturnUrl;
                 ModelState.AddModelError("", "Invalid user name or password");
                 return View();
-            
+
         }
+
+        public ActionResult Register(String returnURL)
+        {
+            ViewBag.ReturnURL = returnURL;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register([Bind(Include = "USERNAME,PASSWORD,LASTNAME,FIRSTNAME,EMAIL,COUNTRY")] user user,String returnURL)
+        {
+            if (ModelState.IsValid)
+            {
+                db.users.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("Login",user);
+            }
+
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

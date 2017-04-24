@@ -16,7 +16,7 @@ namespace BookClubPage
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "books", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Others", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

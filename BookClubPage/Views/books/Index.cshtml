@@ -2,13 +2,66 @@
 
 @{
     ViewBag.Title = "Index";
+
 }
 
-<h2>Index</h2>
+<h2 class="text-center">Books</h2>
+<div class="container text-center book-list-container-container">
+    <p class="label">Sort By:</p>
+    <ul class="list-inline">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+        <li><a class="btn btn-default book-list-buttons btn-lg" href="/books/Index/?sorting=title">Title</a></li>
+        <li><a class="btn btn-default book-list-buttons btn-lg" href="/books/Index/?sorting=author">Author</a></li>
+        <li><a class="btn btn-default book-list-buttons btn-lg" href="/books/Index/?sorting=rating">Rating</a></li>
+        <li><a class="btn btn-default book-list-buttons btn-lg" href="/books/Index/?sorting=views">Views</a></li>
+    </ul>
+    <div class="container text-center carousel-background book-list-container">
+        <ul class="book-list">
+            @foreach (var item in Model.Take(10))
+            {
+                <li><a href="~/books/Details/@item.BOOK_ID" style="color:black;">@Html.DisplayFor(modelItem => item.TITLE)</a></li>
+            }
+        </ul>
+    </div>
+    <a class="btn btn-default book-list-buttons btn-lg" href="/books/Index/?sorting=@ViewBag.Sorting&pageNum=@(ViewBag.PageNumber-1)">Last Page</a>
+    <a class="btn btn-default book-list-buttons btn-lg" href="/books/Index/?sorting=@ViewBag.Sorting&pageNum=@(ViewBag.PageNumber+1)">Next Page</a>
+
+</div>
+
+<!--
+<div id="book-carousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#book-carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#book-carousel" data-slide-to="1"></li>
+        <li data-target="#book-carousel" data-slide-to="2"></li>
+
+    </ol>
+
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <img src="greenSlide.png" alt="an image" />
+             <div class="carousel-caption carousel-background">
+                   <ul>
+                    @foreach (var item in Model)
+                    {
+                        <li>@Html.DisplayFor(modelItem => item.TITLE)</li>
+                    }
+                    </ul>
+              </div>
+         </div>
+     </div>
+</div>
+
+
+
+<ul>
+    @foreach(var item in Model)
+    {
+        <li>@Html.DisplayFor(modelItem => item.TITLE)</li>
+    }
+</ul>
+-->
+<!--
 <table class="table">
     <tr>
         <th>
@@ -31,11 +84,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.VIEWS)
         </td>
-        <td>           
-            @Html.ActionLink("Details", "Details", new { id=item.BOOK_ID })            
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.BOOK_ID })
         </td>
 
     </tr>
 }
 
 </table>
+-->
