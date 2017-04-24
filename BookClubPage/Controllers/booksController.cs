@@ -66,7 +66,7 @@ namespace BookClubPage.Controllers
         }
 
         // GET: books/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id,int? pageNum)
         {
             if (id == null)
             {
@@ -77,8 +77,36 @@ namespace BookClubPage.Controllers
             {
                 return HttpNotFound();
             }
+
+            int PageNum = pageNum ?? 0;
+
+            List<review> reviewList = new List<review>(book.reviews);
+            List<List<review>> reviewListList = new List<List<review>>();
+
+            for (int i = 0; i < reviewList.Count; i++)
+            {
+                reviewListList.Add(new List<review>(reviewList.Take(5)));
+                if (reviewList.Count > 5)
+                {
+                    reviewList.RemoveRange(0, 5);
+                }
+            }
+            reviewListList.Add(new List<review>(reviewList));
+            if (PageNum < 0)
+            {
+                PageNum = reviewListList.Count - 1;
+            }
+
+            if (PageNum > reviewListList.Count - 1)
+            {
+                PageNum = 0;
+            }
+
+            ViewBag.PageNumber = PageNum;
+            ViewBag.Reviews = reviewListList[PageNum];
             int averageRating = Convert.ToInt32((from r in book.reviews select r.RATING).Average());
             ViewBag.Average = averageRating;
+            
             return View(book);
         }
         [Authorize]

@@ -7,6 +7,9 @@
     font-size:80px;
     margin-top:50px;
 }
+.lob-font{
+    font-family: 'Lobster', cursive;
+}
 .homeButton {
     padding: 50px 80px;
     font-size: 30px;
@@ -57,9 +60,23 @@
     border-radius: 25px;
     width: 50%;
     background-color: #00e600;
+    font-family:'Raleway',sans-serif;
+    margin-left:25%;
 }
 
 .label-td{
     width:25%;
     padding-top:0;
+    vertical-align:top;
+}
+
+
+.review-list{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-family:'Raleway',sans-serif;
+}
+.review-buttons{
+
 }
