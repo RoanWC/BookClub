@@ -1,0 +1,51 @@
+﻿@model IEnumerable<BookClubPage.Models.review>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RATING)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CONTENT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.book.TITLE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.user.PASSWORD)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RATING)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CONTENT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.book.TITLE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.user.PASSWORD)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.REVIEW_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.REVIEW_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.REVIEW_ID })
+        </td>
+    </tr>
+}
+
+</table>

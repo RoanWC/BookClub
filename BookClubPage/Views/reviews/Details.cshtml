@@ -1,0 +1,50 @@
+﻿@model BookClubPage.Models.review
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>review</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RATING)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RATING)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CONTENT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CONTENT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.book.TITLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.book.TITLE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user.PASSWORD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user.PASSWORD)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.REVIEW_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
