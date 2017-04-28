@@ -74,15 +74,14 @@ namespace BookClubPage.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            book book = db.books.Find(id);
+            book book = db.books.Where(b => b.BOOK_ID == id).Include("reviews").Include("authors").Select(b => b).FirstOrDefault();
             if (book == null)
             {
                 return HttpNotFound();
             }
 
-            int currentViews = Convert.ToInt32(book.VIEWS);
-            currentViews++;
-            book.VIEWS = currentViews.ToString();
+
+            book.VIEWS++;
             db.SaveChanges();
 
 

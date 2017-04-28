@@ -80,3 +80,21 @@
 .review-buttons{
 
 }
+.create-review-container {
+    padding: 15px;
+    border: solid;
+    border-radius: 25px;
+    width: 50%;
+    background-color: #00e600;
+    font-family:'Raleway',sans-serif;
+    margin-left:25%;
+}
+.bookclub-content-container{
+        padding: 15px;
+    border: solid;
+    border-radius: 25px;
+    width: 50%;
+    background-color: #00e600;
+    font-family:'Raleway',sans-serif;
+    margin-left:25%;
+}

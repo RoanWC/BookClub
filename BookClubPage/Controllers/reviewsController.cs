@@ -36,10 +36,12 @@ namespace BookClubPage.Controllers
             return View(review);
         }
 
+        [Authorize]
         // GET: reviews/Create
-        public ActionResult Create()
+        public ActionResult Create(int? book_id)
         {
-            ViewBag.BOOK_ID = new SelectList(db.books, "BOOK_ID", "TITLE");
+            ViewBag.BookTitle = db.books.Find(book_id).TITLE;
+            ViewBag.BOOK_ID = book_id;
             ViewBag.USERNAME = new SelectList(db.users, "USERNAME", "PASSWORD");
             return View();
         }
@@ -49,10 +51,12 @@ namespace BookClubPage.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "REVIEW_ID,BOOK_ID,USERNAME,RATING,CONTENT")] review review)
+        public ActionResult Create([Bind(Include = "BOOK_ID,RATING,CONTENT")] review review)
         {
             if (ModelState.IsValid)
             {
+                review.USERNAME = User.Identity.Name;
+
                 db.reviews.Add(review);
                 db.SaveChanges();
                 return RedirectToAction("Index");
