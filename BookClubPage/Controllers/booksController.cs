@@ -17,7 +17,7 @@ namespace BookClubPage.Controllers
         // GET: books
         public ActionResult Index(String sorting, int? pageNum)
         {
-            int page = pageNum ?? 0;
+            int page = pageNum ?? 0;   
 
 
             List<book> sortedBooks = new List<book>();
@@ -28,12 +28,14 @@ namespace BookClubPage.Controllers
                     break;
                 case "rating":
                     sortedBooks = db.books.OrderBy(e => e.reviews.Select(r => r.RATING).Average()).Select(e => e).ToList();
-                    break;
+                    sortedBooks.Reverse();
+                    break;               
                 case "author":
                     sortedBooks = db.books.OrderBy(e => e.authors.Select(a => a.LASTNAME).FirstOrDefault()).Select(a => a).ToList();
                     break;
                 case "views":
                     sortedBooks = db.books.OrderBy(b => b.VIEWS).Select(b => b).ToList();
+                    sortedBooks.Reverse();
                     break;
                 default:
                     sortedBooks = db.books.Select(e => e).ToList();
@@ -78,6 +80,12 @@ namespace BookClubPage.Controllers
                 return HttpNotFound();
             }
 
+            int currentViews = Convert.ToInt32(book.VIEWS);
+            currentViews++;
+            book.VIEWS = currentViews.ToString();
+            db.SaveChanges();
+
+
             int PageNum = pageNum ?? 0;
 
             List<review> reviewList = new List<review>(book.reviews);
@@ -104,7 +112,7 @@ namespace BookClubPage.Controllers
 
             ViewBag.PageNumber = PageNum;
             ViewBag.Reviews = reviewListList[PageNum];
-            int averageRating = Convert.ToInt32((from r in book.reviews select r.RATING).Average());
+            double averageRating = Convert.ToDouble((from r in book.reviews select r.RATING).Average());
             ViewBag.Average = averageRating;
             
             return View(book);
