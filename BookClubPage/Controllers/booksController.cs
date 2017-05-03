@@ -70,12 +70,10 @@ namespace BookClubPage.Controllers
                             }
                         }
                         List<book> bestUserBooks = bestUser?.reviews.Select(r => r.book).ToList();
+                        List<book> usersBooks = db.reviews.Where(r => r.USERNAME == User.Identity.Name).Select(r => r.book).ToList();
                         List<book> recomendedBooks = new List<book>();
-                        foreach(book b in bestUserBooks)
-                        {
-                           
-                        }
-
+                        recomendedBooks = bestUserBooks.Where(b => !usersBooks.Contains(b)).Select(b => b).ToList();
+                        sortedBooks = recomendedBooks;
                     }
                     break;
                 default:
@@ -90,6 +88,7 @@ namespace BookClubPage.Controllers
             for (int i = 0; i < sortedBooks.Count; i++)
             {
                 listBookLists.Add(new List<book>(sortedBooks.Take(10)));
+                if(sortedBooks.Count > 10)
                 sortedBooks.RemoveRange(0, 10);
 
             }
