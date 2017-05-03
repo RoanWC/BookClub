@@ -21,8 +21,17 @@
             @foreach (var item in Model.Take(10))
             {
                 <li><a href="~/books/Details/@item.BOOK_ID" style="color:black;">@Html.DisplayFor(modelItem => item.TITLE)</a></li>
+                
+            }
+
+        </ul>
+        <ul class="book-list">
+            @if (ViewBag.recomendedErrorMessage != null)
+            {
+            <li>@ViewBag.recomendedErrorMessage</li>
             }
         </ul>
+
     </div>
     <a class="btn btn-default book-list-buttons btn-lg" href="/books/Index/?sorting=@ViewBag.Sorting&pageNum=@(ViewBag.PageNumber-1)">Last Page</a>
     <a class="btn btn-default book-list-buttons btn-lg" href="/books/Index/?sorting=@ViewBag.Sorting&pageNum=@(ViewBag.PageNumber+1)">Next Page</a>

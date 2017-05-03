@@ -60,11 +60,18 @@ namespace BookClubPage.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Login",user);
+                List<string> usernames = new List<string>();
+                usernames = db.users.Select(u => u.USERNAME).ToList();
+                if (!(usernames.Contains(user.USERNAME)))
+                {
+                    db.users.Add(user);
+                    db.SaveChanges();
+                    return RedirectToAction("Login", user);
+                }else
+                {
+                    ViewBag.usernameErrorMessaege = "The username you chose is already in use";
+                }               
             }
-
             return View();
         }
 

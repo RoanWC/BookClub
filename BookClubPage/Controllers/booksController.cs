@@ -48,33 +48,43 @@ namespace BookClubPage.Controllers
                 case "recomended":
                     if (User.Identity.IsAuthenticated)
                     {
-                        user bestUser = null;
-                        double bestDotProd = 0;
-                        foreach(user u in db.users)
+                        if (db.users.Find(User.Identity.Name).reviews.Count != 0)
                         {
-                            if(u.USERNAME == User.Identity.Name)
+                            user bestUser = null;
+                            double bestDotProd = 0;
+                            foreach (user u in db.users)
                             {
-                                continue;
-                            }
+                                if (u.USERNAME == User.Identity.Name)
+                                {
+                                    continue;
+                                }
 
-                            double currentDotProduct = 0;
-                            foreach(book b in db.books)
-                            {
-                                currentDotProduct += Convert.ToDouble((b.reviews.Where(r => r.user.USERNAME == User.Identity.Name).Select(r => r.RATING).FirstOrDefault()) ?? 0) *
-                                                    Convert.ToDouble((b.reviews.Where(r => r.user.USERNAME == u.USERNAME).Select(r => r.RATING).FirstOrDefault()) ?? 0);
+                                double currentDotProduct = 0;
+                                foreach (book b in db.books)
+                                {
+                                    currentDotProduct += Convert.ToDouble((b.reviews.Where(r => r.user.USERNAME == User.Identity.Name).Select(r => r.RATING).FirstOrDefault()) ?? 0) *
+                                                        Convert.ToDouble((b.reviews.Where(r => r.user.USERNAME == u.USERNAME).Select(r => r.RATING).FirstOrDefault()) ?? 0);
+                                }
+                                if (bestDotProd < currentDotProduct)
+                                {
+                                    bestDotProd = currentDotProduct;
+                                    bestUser = u;
+                                }
                             }
-                            if(bestDotProd < currentDotProduct)
-                            {
-                                bestDotProd = currentDotProduct;
-                                bestUser = u;
-                            }
+                            List<book> bestUserBooks = bestUser?.reviews.Select(r => r.book).ToList();
+                            List<book> usersBooks = db.reviews.Where(r => r.USERNAME == User.Identity.Name).Select(r => r.book).ToList();
+                            List<book> recomendedBooks = new List<book>();
+                            recomendedBooks = bestUserBooks.Where(b => !usersBooks.Contains(b)).Select(b => b).ToList();
+                            sortedBooks = recomendedBooks;
+                        }else
+                        {
+                            ViewBag.recomendedErrorMessage = "Leave some reviews so we can recomend some books to you!";
                         }
-                        List<book> bestUserBooks = bestUser?.reviews.Select(r => r.book).ToList();
-                        List<book> usersBooks = db.reviews.Where(r => r.USERNAME == User.Identity.Name).Select(r => r.book).ToList();
-                        List<book> recomendedBooks = new List<book>();
-                        recomendedBooks = bestUserBooks.Where(b => !usersBooks.Contains(b)).Select(b => b).ToList();
-                        sortedBooks = recomendedBooks;
+                    }else
+                    {
+                        ViewBag.recomendedErrorMessage = "Log in so you can get awesome recomendations!";
                     }
+
                     break;
                 default:
                     sortedBooks = db.books.Select(e => e).ToList();
