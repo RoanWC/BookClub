@@ -20,7 +20,7 @@ namespace BookClubPage.Models
         public Nullable<int> RATING { get; set; }
         public string CONTENT { get; set; }
     
-        public virtual book book { get; set; }
         public virtual user user { get; set; }
+        public virtual book book { get; set; }
     }
 }

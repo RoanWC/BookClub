@@ -26,8 +26,8 @@ namespace BookClubPage.Models
         }
     
         public virtual DbSet<author> authors { get; set; }
-        public virtual DbSet<book> books { get; set; }
         public virtual DbSet<review> reviews { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<book> books { get; set; }
     }
 }

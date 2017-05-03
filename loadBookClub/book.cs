@@ -24,7 +24,7 @@ namespace loadBookClub
         public int BOOK_ID { get; set; }
         public string TITLE { get; set; }
         public string DESCRIPTION { get; set; }
-        public string VIEWS { get; set; }
+        public int VIEWS { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<review> reviews { get; set; }

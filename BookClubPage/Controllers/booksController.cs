@@ -21,6 +21,14 @@ namespace BookClubPage.Controllers
 
 
             List<book> sortedBooks = new List<book>();
+
+
+            
+
+            
+
+
+
             switch (sorting)
             {
                 case "title":
@@ -36,6 +44,39 @@ namespace BookClubPage.Controllers
                 case "views":
                     sortedBooks = db.books.OrderBy(b => b.VIEWS).Select(b => b).ToList();
                     sortedBooks.Reverse();
+                    break;
+                case "recomended":
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        user bestUser = null;
+                        double bestDotProd = 0;
+                        foreach(user u in db.users)
+                        {
+                            if(u.USERNAME == User.Identity.Name)
+                            {
+                                continue;
+                            }
+
+                            double currentDotProduct = 0;
+                            foreach(book b in db.books)
+                            {
+                                currentDotProduct += Convert.ToDouble((b.reviews.Where(r => r.user.USERNAME == User.Identity.Name).Select(r => r.RATING).FirstOrDefault()) ?? 0) *
+                                                    Convert.ToDouble((b.reviews.Where(r => r.user.USERNAME == u.USERNAME).Select(r => r.RATING).FirstOrDefault()) ?? 0);
+                            }
+                            if(bestDotProd < currentDotProduct)
+                            {
+                                bestDotProd = currentDotProduct;
+                                bestUser = u;
+                            }
+                        }
+                        List<book> bestUserBooks = bestUser?.reviews.Select(r => r.book).ToList();
+                        List<book> recomendedBooks = new List<book>();
+                        foreach(book b in bestUserBooks)
+                        {
+                           
+                        }
+
+                    }
                     break;
                 default:
                     sortedBooks = db.books.Select(e => e).ToList();
