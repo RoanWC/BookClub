@@ -170,6 +170,7 @@ namespace BookClubPage.Controllers
         // GET: books/Create
         public ActionResult Create()
         {
+            ViewBag.authors = db.authors.Select(a => a).ToList();
             return View();
         }
 
@@ -179,10 +180,12 @@ namespace BookClubPage.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BOOK_ID,TITLE,DESCRIPTION,VIEWS")] book book)
+        public ActionResult Create([Bind(Include = "BOOK_ID,TITLE,DESCRIPTION,VIEWS")] book book,int authorID)
         {
             if (ModelState.IsValid)
             {
+                author a = db.authors.Find(authorID);
+                book.authors.Add(a);
                 db.books.Add(book);
                 db.SaveChanges();
                 return RedirectToAction("Index");

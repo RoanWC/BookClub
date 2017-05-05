@@ -56,7 +56,11 @@ namespace BookClubPage.Controllers
             if (ModelState.IsValid)
             {
                 review.USERNAME = User.Identity.Name;
-
+                if(review.CONTENT == null)
+                {
+                    review.CONTENT = " ";
+                }
+                review.RATING -= 5;
                 db.reviews.Add(review);
                 db.SaveChanges();
                 return RedirectToAction("Index");

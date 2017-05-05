@@ -43,13 +43,12 @@
                         <li>@r.USERNAME Rated this book @r.RATING</li>
                     }
                 </ul>
-
-
                 @Html.ActionLink("Previous", "Details", new { id = Model.BOOK_ID, pageNum = ViewBag.PageNumber - 1 }, new { @class = "btn btn-default book-list-buttons btn-sm" })
                 @Html.ActionLink("Next", "Details", new { id = Model.BOOK_ID, pageNum = ViewBag.PageNumber + 1 }, new {@class = "btn btn-default book-list-buttons btn-sm" })
                 @Html.ActionLink("Add A Review", "Create", "reviews",new { book_id = Model.BOOK_ID },new { @class = "btn btn-default book-list-buttons btn-sm" });
             </td>
         </tr>
+
     </table>
 
 

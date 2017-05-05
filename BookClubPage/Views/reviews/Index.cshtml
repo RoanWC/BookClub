@@ -21,7 +21,7 @@
             @Html.DisplayNameFor(model => model.book.TITLE)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.user.PASSWORD)
+            @Html.DisplayNameFor(model => model.user.USERNAME)
         </th>
         <th></th>
     </tr>
@@ -38,7 +38,7 @@
             @Html.DisplayFor(modelItem => item.book.TITLE)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.user.PASSWORD)
+            @Html.DisplayFor(modelItem => item.user.USERNAME)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.REVIEW_ID }) |
