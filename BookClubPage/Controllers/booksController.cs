@@ -17,15 +17,15 @@ namespace BookClubPage.Controllers
         // GET: books
         public ActionResult Index(String sorting, int? pageNum)
         {
-            int page = pageNum ?? 0;   
+            int page = pageNum ?? 0;
 
 
             List<book> sortedBooks = new List<book>();
 
 
-            
 
-            
+
+
 
 
 
@@ -37,7 +37,7 @@ namespace BookClubPage.Controllers
                 case "rating":
                     sortedBooks = db.books.OrderBy(e => e.reviews.Select(r => r.RATING).Average()).Select(e => e).ToList();
                     sortedBooks.Reverse();
-                    break;               
+                    break;
                 case "author":
                     sortedBooks = db.books.OrderBy(e => e.authors.Select(a => a.LASTNAME).FirstOrDefault()).Select(a => a).ToList();
                     break;
@@ -163,7 +163,7 @@ namespace BookClubPage.Controllers
             ViewBag.Reviews = reviewListList[PageNum];
             double averageRating = Convert.ToDouble((from r in book.reviews select r.RATING).Average());
             ViewBag.Average = averageRating;
-            
+
             return View(book);
         }
         [Authorize]

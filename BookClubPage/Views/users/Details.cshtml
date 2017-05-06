@@ -4,34 +4,16 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>@User.Identity.Name</h2>
 
-<div>
-    <h4>user</h4>
-    <hr />
+<div class="container bookclub-content-container">
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.PASSWORD)
+            @Html.DisplayNameFor(model => model.USERNAME)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PASSWORD)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LASTNAME)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LASTNAME)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FIRSTNAME)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FIRSTNAME)
+            @Html.DisplayFor(model => model.USERNAME)
         </dd>
 
         <dt>
@@ -43,13 +25,39 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.FIRSTNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FIRSTNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LASTNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LASTNAME)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.COUNTRY)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.COUNTRY)
         </dd>
-
+        <dt>
+            @Html.DisplayNameFor(model => model.reviews)
+        </dt>
+        <dd>
+            <ul class="review-list">
+            @foreach (var r in Model.reviews)
+            {
+                <li>@r.book.TITLE @(r.RATING+5)</li>
+            }
+                </ul>
+        </dd>
     </dl>
 </div>
 <p>

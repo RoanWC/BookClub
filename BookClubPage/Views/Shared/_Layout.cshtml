@@ -15,21 +15,13 @@
 <body>
     <div class="container">
         <nav class="navbar navbar-inverse navbar-fixed-top customNav">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Profile", "Profile", "Account", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Browse", "Index", "Books", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("New Book", "Create", "Books", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Book Club", "Index", "Others", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav btn-group-sm">
+                   <li>@Html.ActionLink("Profile", "Details", "users", new { area = "" }, new { @class = "customNavButton btn btn-default navbar-btn btn-sm" })</li>
+                   <li>@Html.ActionLink("Browse", "Index", "Books", new { area = "" }, new { @class = "customNavButton btn btn-default navbar-btn" })</li>
+                   <li>@Html.ActionLink("New Book", "Create", "Books", new { area = "" }, new { @class = "customNavButton btn btn-default navbar-btn" })</li>
+                   <li>@Html.ActionLink("Home", "Index", "Others", new { area = "" }, new { @class = "customNavButton btn btn-default navbar-btn" })</li>
                 </ul>
-            </div>
+
         </nav>
     </div>
 

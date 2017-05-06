@@ -25,11 +25,16 @@ namespace BookClubPage.Controllers
         // GET: users/Details/5
         public ActionResult Details(string id)
         {
+            user user;
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                user = db.users.Find(User.Identity.Name);
             }
-            user user = db.users.Find(id);
+            else
+            {
+                user = db.users.Find(id);
+            }
+
             if (user == null)
             {
                 return HttpNotFound();
@@ -44,7 +49,7 @@ namespace BookClubPage.Controllers
         }
 
         // POST: users/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -76,7 +81,7 @@ namespace BookClubPage.Controllers
         }
 
         // POST: users/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -105,7 +110,7 @@ namespace BookClubPage.Controllers
             }
             return View(user);
         }
-         
+
         // POST: users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
