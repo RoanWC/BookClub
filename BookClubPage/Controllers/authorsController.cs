@@ -27,7 +27,8 @@ namespace BookClubPage.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            author author = db.authors.Find(id);
+            author author = db.authors.Include("books").Where(a => a.AUTHOR_ID == id).Select(a => a).FirstOrDefault();
+            //author author = db.authors.Find(id);
             List<book> lBooks= new List<book>();
             lBooks = author.books.ToList();
             ViewBag.authBooks = lBooks;
@@ -37,7 +38,7 @@ namespace BookClubPage.Controllers
             }
             return View(author);
         }
-
+        [Authorize]
         // GET: authors/Create
         public ActionResult Create()
         {
@@ -47,6 +48,7 @@ namespace BookClubPage.Controllers
         // POST: authors/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "FIRSTNAME,LASTNAME")] author author)
@@ -67,64 +69,6 @@ namespace BookClubPage.Controllers
 
             return View(author);
         }
-
-        // GET: authors/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            author author = db.authors.Find(id);
-            if (author == null)
-            {
-                return HttpNotFound();
-            }
-            return View(author);
-        }
-
-        // POST: authors/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AUTHOR_ID,FIRSTNAME,LASTNAME")] author author)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(author).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(author);
-        }
-
-        // GET: authors/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            author author = db.authors.Find(id);
-            if (author == null)
-            {
-                return HttpNotFound();
-            }
-            return View(author);
-        }
-
-        // POST: authors/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            author author = db.authors.Find(id);
-            db.authors.Remove(author);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

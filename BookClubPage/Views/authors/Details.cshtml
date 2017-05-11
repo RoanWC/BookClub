@@ -6,18 +6,10 @@
 
 <h2>Details</h2>
 
-<div>
-    <h4>author</h4>
+<div class="authorDetailContainer">
+    <h4>@Html.DisplayFor(model => model.FIRSTNAME) @Html.DisplayFor(model => model.LASTNAME) </h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FIRSTNAME)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FIRSTNAME)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.LASTNAME)
         </dt>

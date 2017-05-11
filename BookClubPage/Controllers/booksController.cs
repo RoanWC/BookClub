@@ -19,30 +19,22 @@ namespace BookClubPage.Controllers
         {
             int page = pageNum ?? 0;
 
-
             List<book> sortedBooks = new List<book>();
-
-
-
-
-
-
-
 
             switch (sorting)
             {
                 case "title":
-                    sortedBooks = db.books.OrderBy(e => e.TITLE).Select(e => e).ToList();
+                    sortedBooks = db.books.Include("authors.reviews").OrderBy(e => e.TITLE).Select(e => e).ToList();
                     break;
                 case "rating":
-                    sortedBooks = db.books.OrderBy(e => e.reviews.Select(r => r.RATING).Average()).Select(e => e).ToList();
+                    sortedBooks = db.books.Include("authors.reviews").OrderBy(e => e.reviews.Select(r => r.RATING).Average()).Select(e => e).ToList();
                     sortedBooks.Reverse();
                     break;
                 case "author":
-                    sortedBooks = db.books.OrderBy(e => e.authors.Select(a => a.LASTNAME).FirstOrDefault()).Select(a => a).ToList();
+                    sortedBooks = db.books.Include("authors.reviews").OrderBy(e => e.authors.Select(a => a.LASTNAME).FirstOrDefault()).Select(a => a).ToList();
                     break;
                 case "views":
-                    sortedBooks = db.books.OrderBy(b => b.VIEWS).Select(b => b).ToList();
+                    sortedBooks = db.books.Include("authors.reviews").OrderBy(b => b.VIEWS).Select(b => b).ToList();
                     sortedBooks.Reverse();
                     break;
                 case "recomended":
@@ -130,10 +122,8 @@ namespace BookClubPage.Controllers
                 return HttpNotFound();
             }
 
-
             book.VIEWS++;
             db.SaveChanges();
-
 
             int PageNum = pageNum ?? 0;
 
@@ -161,7 +151,7 @@ namespace BookClubPage.Controllers
 
             ViewBag.PageNumber = PageNum;
             ViewBag.Reviews = reviewListList[PageNum];
-            double averageRating = Convert.ToDouble((from r in book.reviews select r.RATING).Average());
+            double averageRating = Convert.ToDouble((from r in book.reviews select r.RATING).Average()) +  5;
             ViewBag.Average = averageRating;
 
             return View(book);

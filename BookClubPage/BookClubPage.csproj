@@ -238,9 +238,7 @@
     <Content Include="Views\reviews\Edit.cshtml" />
     <Content Include="Views\reviews\Index.cshtml" />
     <Content Include="Views\authors\Create.cshtml" />
-    <Content Include="Views\authors\Delete.cshtml" />
     <Content Include="Views\authors\Details.cshtml" />
-    <Content Include="Views\authors\Edit.cshtml" />
     <Content Include="Views\authors\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

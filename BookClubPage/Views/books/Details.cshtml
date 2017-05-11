@@ -40,7 +40,7 @@
                 <ul class="review-list">
                     @foreach (var r in @ViewBag.Reviews)
                     {
-                        <li>@r.USERNAME Rated this book @r.RATING</li>
+                        <li>@r.USERNAME Rated this book @(r.RATING + 5)</li>
                     }
                 </ul>
                 @Html.ActionLink("Previous", "Details", new { id = Model.BOOK_ID, pageNum = ViewBag.PageNumber - 1 }, new { @class = "btn btn-default book-list-buttons btn-sm" })
