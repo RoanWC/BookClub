@@ -89,6 +89,26 @@
     font-family:'Raleway',sans-serif;
     margin-left:25%;
 }
+.createAuthorContainer{
+        padding: 15px;
+    border: solid;
+    border-radius: 25px;
+    width: 50%;
+    background-color: #00e600;
+    font-family:'Raleway',sans-serif;
+    margin-left:25%;
+}
+.authorListContainer{
+    padding: 15px;
+    border: solid;
+    border-radius: 25px;
+    width: 50%;
+    height:30em;
+    background-color: #00e600;
+    font-family:'Raleway',sans-serif;
+    margin-left:25%;
+    overflow-y:scroll;
+}
 .bookclub-content-container{
         padding: 15px;
     border: solid;

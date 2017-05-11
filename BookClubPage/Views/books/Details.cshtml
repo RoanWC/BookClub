@@ -13,7 +13,7 @@
                 <label class="detail-label">Auhtor:</label>
             </td>
             <td>
-                <span>@Model.authors.First().FIRSTNAME @Model.authors.First().LASTNAME</span>
+                @Html.ActionLink(@Model.authors.First().FIRSTNAME+" "+@Model.authors.First().LASTNAME, "Details", "authors",new {id=Model.authors.First().AUTHOR_ID},null)
             </td>
         </tr>
         <tr>

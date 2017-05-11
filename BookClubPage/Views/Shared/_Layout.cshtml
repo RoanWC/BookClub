@@ -16,10 +16,13 @@
     <div class="container">
         <nav class="navbar navbar-inverse navbar-fixed-top customNav">
                 <ul class="nav navbar-nav btn-group-sm">
-                   <li>@Html.ActionLink("Profile", "Details", "users", new { area = "" }, new { @class = "customNavButton btn btn-default navbar-btn btn-sm" })</li>
-                   <li>@Html.ActionLink("Browse", "Index", "Books", new { area = "" }, new { @class = "customNavButton btn btn-default navbar-btn" })</li>
-                   <li>@Html.ActionLink("New Book", "Create", "Books", new { area = "" }, new { @class = "customNavButton btn btn-default navbar-btn" })</li>
-                   <li>@Html.ActionLink("Home", "Index", "Others", new { area = "" }, new { @class = "customNavButton btn btn-default navbar-btn" })</li>
+                    <li>@Html.ActionLink("Home", "Index", "Others", new { area = "" }, new { @class = "customNavButton btn btn-default navbar-btn" })</li>
+                    <li>@Html.ActionLink("Browse", "Index", "Books", new { area = "" }, new { @class = "customNavButton btn btn-default navbar-btn" })</li>
+                    <li>@Html.ActionLink("Profile", "Details", "users", new { area = "" }, new { @class = "customNavButton btn btn-default navbar-btn btn-sm" })</li>
+                    <li>@Html.ActionLink("New Book", "Create", "Books", new { area = "" }, new { @class = "customNavButton btn btn-default navbar-btn" })</li>
+                    <li>@Html.ActionLink("New Author","Create","Authors",new { area = "" }, new { @class = "customNavButton btn btn-default navbar-btn" })</li>
+                    <li>@Html.ActionLink("Browse Authors", "Index", "Authors", new { area = "" }, new { @class = "customNavButton btn btn-default navbar-btn" })</li>
+                    <li>@Html.ActionLink("Log In", "Login", "Account", new { area = "" }, new { @class = "customNavButton btn btn-default navbar-btn" })</li>
                 </ul>
 
         </nav>
