@@ -11,7 +11,8 @@ namespace BookClubPage.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class user
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,6 +22,8 @@ namespace BookClubPage.Models
         }
     
         public string USERNAME { get; set; }
+        [DataType(DataType.Password)]
+
         public string PASSWORD { get; set; }
         public string LASTNAME { get; set; }
         public string FIRSTNAME { get; set; }
